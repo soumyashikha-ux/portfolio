@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soumya Shikha — Programmatic Campaign Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0E12;
+    --bg-alt: #0D1218;
+    --panel: #121922;
+    --panel-2: #161f2a;
+    --border: #223040;
+    --border-soft: #1a2532;
+    --text: #E7ECF0;
+    --text-dim: #8FA0AE;
+    --text-dimmer: #5D6E7C;
+    --teal: #2DD4BF;
+    --teal-dim: #1a8c7f;
+    --amber: #F5A623;
+    --rose: #FB7185;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: -1px -1px;
+  }
+
+  ::selection{ background: var(--teal); color:#04140f; }
+
+  a{ color:inherit; }
+
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top:0; z-index:50;
+    background: rgba(10,14,18,0.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border-soft);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:18px 32px; }
+  .brand{ font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:0.08em; color:var(--text); }
+  .brand span{ color:var(--teal); }
+  .navlinks{ display:flex; gap:28px; list-style:none; font-family:var(--mono); font-size:12px; letter-spacing:0.06em; text-transform:uppercase; }
+  .navlinks a{ text-decoration:none; color:var(--text-dim); transition:color .2s; position:relative; }
+  .navlinks a:hover{ color:var(--teal); }
+  .navlinks a:focus-visible{ outline:2px solid var(--teal); outline-offset:4px; }
+  @media (max-width:720px){ .navlinks{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  header.hero{ padding:88px 0 64px; position:relative; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--teal); border:1px solid var(--teal-dim); background:rgba(45,212,191,0.06);
+    padding:6px 12px; border-radius:100px; margin-bottom:28px;
+  }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); animation: blink 1.8s ease-in-out infinite; }
+  @keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
+
+  h1.name{
+    font-family:var(--mono); font-weight:800; letter-spacing:-0.01em;
+    font-size:clamp(38px, 7vw, 74px); line-height:1.02; color:var(--text);
+    text-transform:uppercase;
+  }
+  h1.name .last{ color:var(--text-dimmer); }
+
+  .role-line{
+    font-family:var(--sans); font-weight:600; font-size:clamp(16px,2.4vw,21px);
+    color:var(--text-dim); margin-top:18px; max-width:620px;
+  }
+  .role-line strong{ color:var(--text); font-weight:700; }
+
+  .hero-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap:40px; align-items:start; margin-top:52px; }
+  @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .pitch{ font-size:16px; color:var(--text-dim); max-width:520px; }
+  .pitch strong{ color:var(--text); }
+
+  .cta-row{ display:flex; gap:12px; margin-top:32px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:0.03em;
+    padding:12px 20px; border-radius:6px; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    border:1px solid var(--border);
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+  .btn-primary{ background:var(--teal); color:#04140f; border-color:var(--teal); }
+  .btn-primary:hover{ background:#3fe0cb; }
+  .btn-ghost{ color:var(--text); background:transparent; }
+  .btn-ghost:hover{ border-color:var(--teal-dim); color:var(--teal); }
+
+  /* ---------- LIVE CONSOLE ---------- */
+  .console{
+    background: var(--panel); border:1px solid var(--border); border-radius:10px;
+    overflow:hidden; box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .console-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 16px; border-bottom:1px solid var(--border-soft); background:var(--panel-2);
+  }
+  .console-head .label{ font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--text-dimmer); text-transform:uppercase; }
+  .console-head .live{ display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; color:var(--teal); }
+  .status-ticker{ display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; color:var(--teal); min-width:0; }
+  .status-ticker .cursor{ animation: blink 1s step-end infinite; color:var(--teal); }
+  .console-body{ padding:20px 18px; display:grid; gap:16px; }
+
+  .mode-toggle{ display:flex; gap:4px; background:var(--bg-alt); border:1px solid var(--border-soft); border-radius:6px; padding:3px; }
+  .mode-btn{
+    font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.05em;
+    color:var(--text-dimmer); background:transparent; border:none; padding:7px 12px; border-radius:4px;
+    cursor:pointer; transition:.2s;
+  }
+  .mode-btn.active{ background:var(--teal); color:#04140f; }
+  .mode-btn:not(.active):hover{ color:var(--text); }
+  .mode-btn:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
+
+  .mode-panel{ display:none; flex-direction:column; gap:12px; }
+  .mode-panel.active{ display:flex; }
+  .cap-row{ font-size:13px; color:var(--text-dim); display:flex; gap:9px; align-items:flex-start; line-height:1.5; }
+  .cap-ico{ color:var(--teal); font-family:var(--mono); flex-shrink:0; margin-top:1px; }
+
+  .console-foot{
+    border-top:1px solid var(--border-soft); padding:10px 16px; font-family:var(--mono);
+    font-size:11px; color:var(--text-dimmer); display:flex; justify-content:space-between;
+  }
+
+  /* ---------- WHY ME ---------- */
+  .why-band{ padding:48px 0; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); background:var(--bg-alt); }
+  .why-label{ font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin-bottom:24px; }
+  .why-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+  @media (max-width:860px){ .why-grid{ grid-template-columns:1fr; } }
+  .why-card{ padding:4px 0; }
+  .why-card h4{ font-family:var(--mono); font-size:14px; color:var(--teal); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+  .why-card h4::before{ content:'▸'; color:var(--amber); }
+  .why-card p{ font-size:14px; color:var(--text-dim); line-height:1.6; }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:72px 0; border-top:1px solid var(--border-soft); }
+  .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
+  .sec-index{ font-family:var(--mono); color:var(--teal-dim); font-size:14px; }
+  .sec-title{ font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); }
+  .sec-title::after{ content:''; display:block; height:1px; background:var(--border-soft); margin-top:14px; width:100%; }
+  .sec-head-flex{ display:flex; flex-direction:column; flex:1; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 0.7fr; gap:48px; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-text p{ color:var(--text-dim); font-size:16px; margin-bottom:16px; max-width:560px; }
+  .about-text strong{ color:var(--text); }
+  .about-text .highlight{ color:var(--teal); font-weight:600; }
+
+  .fact-list{ display:grid; gap:0; border:1px solid var(--border-soft); border-radius:8px; overflow:hidden; }
+  .fact{ display:grid; grid-template-columns: 84px 1fr; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border-soft); }
+  .fact:last-child{ border-bottom:none; }
+  .fact-k{ font-family:var(--mono); font-size:11px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:0.06em; padding-top:2px; }
+  .fact-v{ font-size:14px; color:var(--text); }
+
+  /* ---------- SKILLS ---------- */
+  .skill-cols{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
+  @media (max-width:860px){ .skill-cols{ grid-template-columns:1fr; } }
+  .skill-panel{ background:var(--panel); border:1px solid var(--border-soft); border-radius:8px; padding:20px; transition: border-color .2s; }
+  .skill-panel:hover{ border-color: var(--teal-dim); }
+  .skill-panel h3{ font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); margin-bottom:14px; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-family:var(--mono); font-size:12px; color:var(--text-dim); background:var(--panel-2);
+    border:1px solid var(--border-soft); padding:6px 10px; border-radius:5px; transition:.15s;
+  }
+  .chip:hover{ color:var(--text); border-color:var(--teal-dim); background:rgba(45,212,191,0.06); }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{ position:relative; }
+  .job{
+    display:grid; grid-template-columns: 200px 1fr; gap:28px; padding:26px 0;
+    border-bottom:1px solid var(--border-soft); cursor:pointer;
+  }
+  .job:last-child{ border-bottom:none; }
+  @media (max-width:720px){ .job{ grid-template-columns:1fr; gap:8px; } }
+
+  .job-meta{ font-family:var(--mono); font-size:12px; color:var(--text-dimmer); }
+  .job-meta .dates{ color:var(--amber); margin-bottom:6px; display:block; }
+  .job-meta .company{ color:var(--text-dim); }
+
+  .job-main h3{ font-size:17px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:10px; }
+  .job-main h3 .chev{ font-family:var(--mono); color:var(--teal); transition:transform .25s; font-size:13px; }
+  .job.open .chev{ transform:rotate(90deg); }
+
+  .job-detail{
+    max-height:0; overflow:hidden; transition:max-height .35s ease;
+  }
+  .job.open .job-detail{ max-height:600px; }
+  .job-detail ul{ list-style:none; margin-top:14px; display:grid; gap:8px; }
+  .job-detail li{ font-size:14px; color:var(--text-dim); position:relative; padding-left:18px; }
+  .job-detail li::before{ content:'▸'; position:absolute; left:0; color:var(--teal-dim); }
+
+  .tag-row{ margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
+  .tag{ font-family:var(--mono); font-size:11px; color:var(--teal); background:rgba(45,212,191,0.08); border:1px solid var(--teal-dim); padding:3px 8px; border-radius:4px; }
+
+  /* ---------- EDUCATION ---------- */
+  .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  @media (max-width:720px){ .edu-grid{ grid-template-columns:1fr; } }
+  .edu-card{ background:var(--panel); border:1px solid var(--border-soft); border-radius:8px; padding:20px; }
+  .edu-card .tag-status{ display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); border:1px solid #6b4d16; background:rgba(245,166,35,0.08); padding:3px 8px; border-radius:4px; margin-bottom:10px; }
+  .edu-card h4{ font-size:15px; color:var(--text); margin-bottom:4px; }
+  .edu-card p{ font-size:13px; color:var(--text-dimmer); font-family:var(--mono); }
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  footer{ padding:80px 0 60px; text-align:center; }
+  footer h2{
+    font-family:var(--mono); text-transform:uppercase; letter-spacing:-0.01em;
+    font-size:clamp(30px,5vw,52px); color:var(--text); margin-bottom:18px;
+  }
+  footer .sub{ color:var(--text-dim); max-width:480px; margin:0 auto 36px; }
+  .contact-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .foot-note{ margin-top:60px; font-family:var(--mono); font-size:11px; color:var(--text-dimmer); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">SOUMYA<span>.</span>SHIKHA</div>
+    <ul class="navlinks">
+      <li><a href="#about">Profile</a></li>
+      <li><a href="#skills">Stack</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> CAMPAIGN STATUS: LIVE</span>
+    <h1 class="name">SOUMYA<br><span class="last">SHIKHA</span></h1>
+    <p class="role-line">
+      <strong>Programmatic Campaign Manager</strong> — ramped from 5 years of publisher/SSP campaign operations into hands-on DSP execution in a matter of months.
+    </p>
+
+    <div class="hero-grid">
+      <div>
+        <p class="pitch">
+          I run <strong>Display, Video, CTV/OTT, Audio, and DOOH</strong> campaigns end-to-end — setup, trafficking, RTB reporting, pacing, and optimization — on <strong>The Trade Desk, Madhive, and Audio Serve</strong>. Before that: five years of trafficking, tag QA, and billing reconciliation on the publisher side. I pick up new platforms fast and don't wait to be handed the manual.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:sinha4soumya@gmail.com">Email Me →</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/soumya-shikha-74132a15a/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="#experience">View Experience</a>
+        </div>
+      </div>
+
+      <div class="console" id="console">
+        <div class="console-head">
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="dsp">DSP SIDE</button>
+            <button class="mode-btn" data-mode="ssp">SSP SIDE</button>
+          </div>
+          <div class="status-ticker"><span class="dot"></span><span id="tickerText"></span><span class="cursor">▍</span></div>
+        </div>
+        <div class="console-body">
+          <div class="mode-panel active" data-panel="dsp">
+            <div class="cap-row"><span class="cap-ico">▸</span> Daily campaign optimization across DSPs</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Pulling and reading RTB performance reports</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Delivery troubleshooting and pacing management</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Campaign setup — budgets, segmentation, geo-targeting</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Tag and creative QA before launch</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> CTV/OTT, Audio &amp; DOOH campaign exposure</div>
+          </div>
+          <div class="mode-panel" data-panel="ssp">
+            <div class="cap-row"><span class="cap-ico">▸</span> Ran campaigns end-to-end on the publisher/SSP side</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Helped clients with CM360 tag setup and troubleshooting</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Pulled and shared delivery reports on a regular cycle</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Resolved tag-sharing issues between teams and partners</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Owned creative and tag QA before campaigns went live</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Proactive client communication on delivery and pacing</div>
+          </div>
+        </div>
+        <div class="console-foot">
+          <span>DSP: CURRENT ROLE &nbsp;·&nbsp; SSP: 5 YEARS</span>
+          <span>MARKET: US</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="why-band">
+  <div class="wrap">
+    <div class="why-label">Why work with me</div>
+    <div class="why-grid">
+      <div class="why-card">
+        <h4>Learning fast, staying grounded</h4>
+        <p>A few months into programmatic, and still learning the platform day to day — but the instinct to ask questions and catch issues early carries over fast.</p>
+      </div>
+      <div class="why-card">
+        <h4>I notice the small things</h4>
+        <p>A mistagged pixel, a pacing curve drifting, a billing mismatch — the kind of details that are easy to miss if you're not looking closely.</p>
+      </div>
+      <div class="why-card">
+        <h4>Comfortable on both sides</h4>
+        <p>Five years on the SSP side, now hands-on with DSPs — it helps to see a campaign from both ends of the table.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-index">01</span>
+      <div class="sec-head-flex"><span class="sec-title">Profile</span></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Five years deep in campaign operations before I made the jump to programmatic. The details of that jump matter less than the pattern behind it — I learn fast, lean on the people around me, and never wait to be handed the manual. <span class="highlight">I picked up DV360 and CM360 the same way, years earlier</span>, through self-directed learning and good working relationships with the teams around me.</p>
+        <p>What stays constant across both sides: I catch the mistagged pixel, the pacing drift, the billing mismatch — before it becomes someone else's problem.</p>
+      </div>
+      <div class="fact-list">
+        <div class="fact"><span class="fact-k">Based</span><span class="fact-v">Hyderabad, India</span></div>
+        <div class="fact"><span class="fact-k">DSP Side</span><span class="fact-v">The Trade Desk, Madhive, Audio Serve — current</span></div>
+        <div class="fact"><span class="fact-k">SSP Side</span><span class="fact-v">Google Ad Manager, Operative, CM360 — 5 years</span></div>
+        <div class="fact"><span class="fact-k">Markets</span><span class="fact-v">United States</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-index">02</span>
+      <div class="sec-head-flex"><span class="sec-title">Skills &amp; Tools</span></div>
+    </div>
+    <div class="skill-cols">
+      <div class="skill-panel">
+        <h3>DSP &amp; Programmatic</h3>
+        <div class="chip-row">
+          <span class="chip">The Trade Desk</span>
+          <span class="chip">Madhive</span>
+          <span class="chip">Audio Serve</span>
+          <span class="chip">RTB Reporting</span>
+          <span class="chip">Optimization</span>
+          <span class="chip">Troubleshooting</span>
+          <span class="chip">CTV/OTT &amp; DOOH</span>
+        </div>
+      </div>
+      <div class="skill-panel">
+        <h3>SSP &amp; Ad Servers</h3>
+        <div class="chip-row">
+          <span class="chip">Google Ad Manager</span>
+          <span class="chip">Operative</span>
+          <span class="chip">CM360</span>
+          <span class="chip">Jira</span>
+          <span class="chip">Optimization</span>
+          <span class="chip">Troubleshooting</span>
+          <span class="chip">Tag &amp; Pixel QA</span>
+        </div>
+      </div>
+      <div class="skill-panel">
+        <h3>Operations &amp; Soft Skills</h3>
+        <div class="chip-row">
+          <span class="chip">Cross-Team Collaboration</span>
+          <span class="chip">Client Trust</span>
+          <span class="chip">Fast Learning</span>
+          <span class="chip">Team Mentoring</span>
+          <span class="chip">Billing Reconciliation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-index">03</span>
+      <div class="sec-head-flex"><span class="sec-title">Experience</span></div>
+    </div>
+    <div class="timeline" id="timeline">
+
+      <div class="job">
+        <div class="job-meta">
+          <span class="dates">Apr 2026 — Present</span>
+          <span class="company">MediaMint, Hyderabad</span>
+        </div>
+        <div class="job-main">
+          <h3><span class="chev">▸</span> Senior Campaign Manager, Programmatic</h3>
+          <div class="job-detail">
+            <ul>
+              <li>Moved from 5 years on SSP into hands-on DSP execution.</li>
+              <li>Manage Display, Video, CTV/OTT, Audio &amp; DOOH campaigns.</li>
+              <li>End-to-end setup — budgets, targeting, tag/creative QA.</li>
+              <li>Daily RTB reporting, pacing &amp; optimization.</li>
+              <li>Bringing 5 years of ops discipline to DSP execution.</li>
+            </ul>
+            <div class="tag-row"><span class="tag">TTD</span><span class="tag">RTB</span><span class="tag">CTV/DOOH</span><span class="tag">US Market</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <span class="dates">Jun 2024 — Mar 2026</span>
+          <span class="company">MediaMint, Hyderabad</span>
+        </div>
+        <div class="job-main">
+          <h3><span class="chev">▸</span> Senior Account Manager</h3>
+          <div class="job-detail">
+            <ul>
+              <li>Owned high-budget, client-facing accounts.</li>
+              <li>Led 500+ campaign setups through a platform migration.</li>
+              <li>Aligned strategy with sales &amp; planning teams.</li>
+              <li>Mentored teammates on setup, QA &amp; process.</li>
+              <li>Became the go-to contact for key accounts.</li>
+            </ul>
+            <div class="tag-row"><span class="tag">Client Ownership</span><span class="tag">Mentoring</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <span class="dates">Jun 2021 — May 2024</span>
+          <span class="company">MediaMint, Hyderabad</span>
+        </div>
+        <div class="job-main">
+          <h3><span class="chev">▸</span> Account Manager, Associate II</h3>
+          <div class="job-detail">
+            <ul>
+              <li>Managed end-to-end campaigns via GAM, Operative &amp; CM360.</li>
+              <li>Scaled from low-budget to 2M+ impression accounts.</li>
+              <li>Resolved trafficking issues — pixel misfires, data mismatches.</li>
+              <li>Closed billing reconciliation every cycle.</li>
+              <li>Ran pacing calls &amp; delivery updates with sales.</li>
+              <li>Trained internal teams on process &amp; setup.</li>
+            </ul>
+            <div class="tag-row"><span class="tag">GAM</span><span class="tag">CM360</span><span class="tag">Billing</span><span class="tag">Jira</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <span class="dates">May 2020 — Jun 2021</span>
+          <span class="company">TTEC, Ahmedabad</span>
+        </div>
+        <div class="job-main">
+          <h3><span class="chev">▸</span> Chat Associate I</h3>
+          <div class="job-detail">
+            <ul>
+              <li>Resolved account issues via live chat.</li>
+              <li>Ran account QA — fraud &amp; takeover risk.</li>
+              <li>Guided sellers on policy &amp; compliance questions.</li>
+              <li>Recognized for speed &amp; accuracy under pressure.</li>
+              <li>Early exposure to e-commerce marketing tools.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <span class="dates">May 2019 — May 2020</span>
+          <span class="company">TTEC, Ahmedabad</span>
+        </div>
+        <div class="job-main">
+          <h3><span class="chev">▸</span> Fraud Prevention Analyst</h3>
+          <div class="job-detail">
+            <ul>
+              <li>Investigated high-risk transactions on a global platform.</li>
+              <li>Flagged chargebacks &amp; suspicious account patterns.</li>
+              <li>Maintained strong QA accuracy on every case.</li>
+              <li>Trained on an in-house fraud detection tool.</li>
+              <li>Built data-analysis skills that carried into ad ops.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-index">04</span>
+      <div class="sec-head-flex"><span class="sec-title">Education</span></div>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <span class="tag-status">In Progress</span>
+        <h4>MBA, Marketing</h4>
+        <p>Manipal Academy of Higher Education — since Apr 2025</p>
+      </div>
+      <div class="edu-card">
+        <span class="tag-status" style="color:#8FA0AE;border-color:#334455;background:rgba(143,160,174,0.08);">Completed</span>
+        <h4>B.Tech, Electronics &amp; Communication</h4>
+        <p>Siksha 'O' Anusandhan University — 2015–2019</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="eyebrow"><span class="dot"></span> OPEN TO OPPORTUNITIES</span>
+    <h2>Let's talk<br>programmatic.</h2>
+    <p class="sub">Ramping fast, grounded in five years of campaign discipline. Reach out if there's a Trading, Programmatic, or Campaign Management seat to fill.</p>
+    <div class="contact-row">
+      <a class="btn btn-primary" href="mailto:sinha4soumya@gmail.com">sinha4soumya@gmail.com</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/soumya-shikha-74132a15a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-ghost" href="tel:+919470304618">+91-9470304618</a>
+    </div>
+    <p class="foot-note">HYDERABAD, INDIA — BUILT FOR PROGRAMMATIC, ONE RTB REPORT AT A TIME.</p>
+  </div>
+</footer>
+
+<script>
+  // Accordion for experience
+  document.querySelectorAll('.job').forEach(job => {
+    job.addEventListener('click', () => {
+      const isOpen = job.classList.contains('open');
+      document.querySelectorAll('.job').forEach(j => j.classList.remove('open'));
+      if(!isOpen) job.classList.add('open');
+    });
+  });
+  // open first job by default
+  document.querySelector('.job')?.classList.add('open');
+
+  // DSP / SSP mode toggle
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`.mode-panel[data-panel="${mode}"]`).classList.add('active');
+      if(typeof runTicker === 'function') runTicker(mode);
+    });
+  });
+  // Typewriter status ticker — cycles through real day-to-day activity, per active tab
+  const tickerSets = {
+    dsp: ['checking pacing…', 'reviewing RTB data…', 'QA\u2019ing creative…', 'setting up geo-targeting…', 'watching VCR & CTR…'],
+    ssp: ['pulling delivery reports…', 'checking CM360 tags…', 'resolving a tag-sharing issue…', 'QA\u2019ing a creative…', 'updating a client on pacing…']
+  };
+  const tickerEl = document.getElementById('tickerText');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let tickerTimeoutId = null;
+  let currentSet = 'dsp';
+
+  function runTicker(mode){
+    currentSet = mode;
+    if(tickerTimeoutId) clearTimeout(tickerTimeoutId);
+    if(!tickerEl) return;
+    const phrases = tickerSets[mode] || tickerSets.dsp;
+    if(reduceMotion){
+      tickerEl.textContent = phrases[0];
+      return;
+    }
+    let pIdx = 0, cIdx = 0, deleting = false;
+    const tick = () => {
+      if(currentSet !== mode) return; // stop stale loop after a tab switch
+      const phrase = phrases[pIdx];
+      if(!deleting){
+        cIdx++;
+        tickerEl.textContent = phrase.slice(0, cIdx);
+        if(cIdx === phrase.length){ deleting = true; tickerTimeoutId = setTimeout(tick, 1400); return; }
+      } else {
+        cIdx--;
+        tickerEl.textContent = phrase.slice(0, cIdx);
+        if(cIdx === 0){ deleting = false; pIdx = (pIdx + 1) % phrases.length; }
+      }
+      tickerTimeoutId = setTimeout(tick, deleting ? 30 : 55);
+    };
+    tick();
+  }
+
+  runTicker('dsp');
+</script>
+
+</body>
+</html>
