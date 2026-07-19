@@ -24,11 +24,11 @@
     --mono: 'JetBrains Mono', monospace;
     --sans: 'Inter', sans-serif;
   }
-
+ 
   *{ margin:0; padding:0; box-sizing:border-box; }
-
+ 
   html{ scroll-behavior:smooth; }
-
+ 
   body{
     background: var(--bg);
     color: var(--text);
@@ -41,13 +41,13 @@
     background-size: 48px 48px;
     background-position: -1px -1px;
   }
-
+ 
   ::selection{ background: var(--teal); color:#04140f; }
-
+ 
   a{ color:inherit; }
-
+ 
   .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
-
+ 
   /* ---------- NAV ---------- */
   nav{
     position: sticky; top:0; z-index:50;
@@ -63,7 +63,7 @@
   .navlinks a:hover{ color:var(--teal); }
   .navlinks a:focus-visible{ outline:2px solid var(--teal); outline-offset:4px; }
   @media (max-width:720px){ .navlinks{ display:none; } }
-
+ 
   /* ---------- HERO ---------- */
   header.hero{ padding:88px 0 64px; position:relative; }
   .eyebrow{
@@ -74,26 +74,26 @@
   }
   .dot{ width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); animation: blink 1.8s ease-in-out infinite; }
   @keyframes blink{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
-
+ 
   h1.name{
     font-family:var(--mono); font-weight:800; letter-spacing:-0.01em;
     font-size:clamp(38px, 7vw, 74px); line-height:1.02; color:var(--text);
     text-transform:uppercase;
   }
   h1.name .last{ color:var(--text-dimmer); }
-
+ 
   .role-line{
     font-family:var(--sans); font-weight:600; font-size:clamp(16px,2.4vw,21px);
     color:var(--text-dim); margin-top:18px; max-width:620px;
   }
   .role-line strong{ color:var(--text); font-weight:700; }
-
+ 
   .hero-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap:40px; align-items:start; margin-top:52px; }
   @media (max-width:860px){ .hero-grid{ grid-template-columns:1fr; } }
-
+ 
   .pitch{ font-size:16px; color:var(--text-dim); max-width:520px; }
   .pitch strong{ color:var(--text); }
-
+ 
   .cta-row{ display:flex; gap:12px; margin-top:32px; flex-wrap:wrap; }
   .btn{
     font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:0.03em;
@@ -107,7 +107,7 @@
   .btn-primary:hover{ background:#3fe0cb; }
   .btn-ghost{ color:var(--text); background:transparent; }
   .btn-ghost:hover{ border-color:var(--teal-dim); color:var(--teal); }
-
+ 
   /* ---------- LIVE CONSOLE ---------- */
   .console{
     background: var(--panel); border:1px solid var(--border); border-radius:10px;
@@ -122,7 +122,7 @@
   .status-ticker{ display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11px; color:var(--teal); min-width:0; }
   .status-ticker .cursor{ animation: blink 1s step-end infinite; color:var(--teal); }
   .console-body{ padding:20px 18px; display:grid; gap:16px; }
-
+ 
   .mode-toggle{ display:flex; gap:4px; background:var(--bg-alt); border:1px solid var(--border-soft); border-radius:6px; padding:3px; }
   .mode-btn{
     font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:0.05em;
@@ -132,17 +132,17 @@
   .mode-btn.active{ background:var(--teal); color:#04140f; }
   .mode-btn:not(.active):hover{ color:var(--text); }
   .mode-btn:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; }
-
+ 
   .mode-panel{ display:none; flex-direction:column; gap:12px; }
   .mode-panel.active{ display:flex; }
   .cap-row{ font-size:13px; color:var(--text-dim); display:flex; gap:9px; align-items:flex-start; line-height:1.5; }
   .cap-ico{ color:var(--teal); font-family:var(--mono); flex-shrink:0; margin-top:1px; }
-
+ 
   .console-foot{
     border-top:1px solid var(--border-soft); padding:10px 16px; font-family:var(--mono);
     font-size:11px; color:var(--text-dimmer); display:flex; justify-content:space-between;
   }
-
+ 
   /* ---------- WHY ME ---------- */
   .why-band{ padding:48px 0; border-top:1px solid var(--border-soft); border-bottom:1px solid var(--border-soft); background:var(--bg-alt); }
   .why-label{ font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber); margin-bottom:24px; }
@@ -152,7 +152,21 @@
   .why-card h4{ font-family:var(--mono); font-size:14px; color:var(--teal); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
   .why-card h4::before{ content:'▸'; color:var(--amber); }
   .why-card p{ font-size:14px; color:var(--text-dim); line-height:1.6; }
-
+ 
+  /* ---------- HOW I THINK ---------- */
+  .process-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:0; position:relative; }
+  @media (max-width:860px){ .process-grid{ grid-template-columns:1fr; gap:24px; } }
+  .process-step{ padding:0 20px 0 0; position:relative; }
+  .process-step:first-child{ padding-left:0; }
+  .process-step:not(:last-child)::after{
+    content:'→'; position:absolute; right:-2px; top:6px; color:var(--teal-dim); font-family:var(--mono); font-size:14px;
+  }
+  @media (max-width:860px){ .process-step:not(:last-child)::after{ content:'↓'; right:auto; left:0; top:auto; bottom:-20px; } }
+  .process-step .num{ font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:0.1em; margin-bottom:8px; display:block; }
+  .process-step h4{ font-family:var(--mono); font-size:13px; color:var(--text); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
+  .process-step p{ font-size:13px; color:var(--text-dim); line-height:1.6; }
+  .process-note{ margin-top:28px; font-size:13px; color:var(--text-dimmer); font-family:var(--mono); }
+ 
   /* ---------- SECTION SHELL ---------- */
   section{ padding:72px 0; border-top:1px solid var(--border-soft); }
   .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:36px; }
@@ -160,20 +174,20 @@
   .sec-title{ font-family:var(--mono); font-weight:700; font-size:14px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); }
   .sec-title::after{ content:''; display:block; height:1px; background:var(--border-soft); margin-top:14px; width:100%; }
   .sec-head-flex{ display:flex; flex-direction:column; flex:1; }
-
+ 
   /* ---------- ABOUT ---------- */
   .about-grid{ display:grid; grid-template-columns: 1.3fr 0.7fr; gap:48px; }
   @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; } }
   .about-text p{ color:var(--text-dim); font-size:16px; margin-bottom:16px; max-width:560px; }
   .about-text strong{ color:var(--text); }
   .about-text .highlight{ color:var(--teal); font-weight:600; }
-
+ 
   .fact-list{ display:grid; gap:0; border:1px solid var(--border-soft); border-radius:8px; overflow:hidden; }
   .fact{ display:grid; grid-template-columns: 84px 1fr; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border-soft); }
   .fact:last-child{ border-bottom:none; }
   .fact-k{ font-family:var(--mono); font-size:11px; color:var(--text-dimmer); text-transform:uppercase; letter-spacing:0.06em; padding-top:2px; }
   .fact-v{ font-size:14px; color:var(--text); }
-
+ 
   /* ---------- SKILLS ---------- */
   .skill-cols{ display:grid; grid-template-columns: repeat(3, 1fr); gap:20px; }
   @media (max-width:860px){ .skill-cols{ grid-template-columns:1fr; } }
@@ -186,7 +200,7 @@
     border:1px solid var(--border-soft); padding:6px 10px; border-radius:5px; transition:.15s;
   }
   .chip:hover{ color:var(--text); border-color:var(--teal-dim); background:rgba(45,212,191,0.06); }
-
+ 
   /* ---------- EXPERIENCE ---------- */
   .timeline{ position:relative; }
   .job{
@@ -195,15 +209,15 @@
   }
   .job:last-child{ border-bottom:none; }
   @media (max-width:720px){ .job{ grid-template-columns:1fr; gap:8px; } }
-
+ 
   .job-meta{ font-family:var(--mono); font-size:12px; color:var(--text-dimmer); }
   .job-meta .dates{ color:var(--amber); margin-bottom:6px; display:block; }
   .job-meta .company{ color:var(--text-dim); }
-
+ 
   .job-main h3{ font-size:17px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:10px; }
   .job-main h3 .chev{ font-family:var(--mono); color:var(--teal); transition:transform .25s; font-size:13px; }
   .job.open .chev{ transform:rotate(90deg); }
-
+ 
   .job-detail{
     max-height:0; overflow:hidden; transition:max-height .35s ease;
   }
@@ -211,10 +225,10 @@
   .job-detail ul{ list-style:none; margin-top:14px; display:grid; gap:8px; }
   .job-detail li{ font-size:14px; color:var(--text-dim); position:relative; padding-left:18px; }
   .job-detail li::before{ content:'▸'; position:absolute; left:0; color:var(--teal-dim); }
-
+ 
   .tag-row{ margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
   .tag{ font-family:var(--mono); font-size:11px; color:var(--teal); background:rgba(45,212,191,0.08); border:1px solid var(--teal-dim); padding:3px 8px; border-radius:4px; }
-
+ 
   /* ---------- EDUCATION ---------- */
   .edu-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
   @media (max-width:720px){ .edu-grid{ grid-template-columns:1fr; } }
@@ -222,7 +236,7 @@
   .edu-card .tag-status{ display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); border:1px solid #6b4d16; background:rgba(245,166,35,0.08); padding:3px 8px; border-radius:4px; margin-bottom:10px; }
   .edu-card h4{ font-size:15px; color:var(--text); margin-bottom:4px; }
   .edu-card p{ font-size:13px; color:var(--text-dimmer); font-family:var(--mono); }
-
+ 
   /* ---------- CONTACT / FOOTER ---------- */
   footer{ padding:80px 0 60px; text-align:center; }
   footer h2{
@@ -232,7 +246,7 @@
   footer .sub{ color:var(--text-dim); max-width:480px; margin:0 auto 36px; }
   .contact-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
   .foot-note{ margin-top:60px; font-family:var(--mono); font-size:11px; color:var(--text-dimmer); }
-
+ 
   @media (prefers-reduced-motion: reduce){
     *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
     html{ scroll-behavior:auto; }
@@ -240,20 +254,21 @@
 </style>
 </head>
 <body>
-
+ 
 <nav>
   <div class="wrap">
     <div class="brand">SOUMYA<span>.</span>SHIKHA</div>
     <ul class="navlinks">
       <li><a href="#about">Profile</a></li>
       <li><a href="#skills">Stack</a></li>
+      <li><a href="#how-i-think">Process</a></li>
       <li><a href="#experience">Experience</a></li>
       <li><a href="#education">Education</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </nav>
-
+ 
 <header class="hero">
   <div class="wrap">
     <span class="eyebrow"><span class="dot"></span> CAMPAIGN STATUS: LIVE</span>
@@ -261,7 +276,7 @@
     <p class="role-line">
       <strong>Programmatic Campaign Manager</strong> — ramped from 5 years of publisher/SSP campaign operations into hands-on DSP execution in a matter of months.
     </p>
-
+ 
     <div class="hero-grid">
       <div>
         <p class="pitch">
@@ -273,7 +288,7 @@
           <a class="btn btn-ghost" href="#experience">View Experience</a>
         </div>
       </div>
-
+ 
       <div class="console" id="console">
         <div class="console-head">
           <div class="mode-toggle">
@@ -297,7 +312,7 @@
             <div class="cap-row"><span class="cap-ico">▸</span> Pulled and shared delivery reports on a regular cycle</div>
             <div class="cap-row"><span class="cap-ico">▸</span> Resolved tag-sharing issues between teams and partners</div>
             <div class="cap-row"><span class="cap-ico">▸</span> Owned creative and tag QA before campaigns went live</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Proactive client communication on delivery and pacing</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Led pacing calls with sales — flagged updates &amp; optimizations early</div>
           </div>
         </div>
         <div class="console-foot">
@@ -308,14 +323,14 @@
     </div>
   </div>
 </header>
-
+ 
 <div class="why-band">
   <div class="wrap">
     <div class="why-label">Why work with me</div>
     <div class="why-grid">
       <div class="why-card">
-        <h4>Learning fast, staying grounded</h4>
-        <p>A few months into programmatic, and still learning the platform day to day — but the instinct to ask questions and catch issues early carries over fast.</p>
+        <h4>I ask before I assume</h4>
+        <p>Before optimizing anything, I want to understand why it's happening — a habit that saves more time than it costs.</p>
       </div>
       <div class="why-card">
         <h4>I notice the small things</h4>
@@ -328,7 +343,7 @@
     </div>
   </div>
 </div>
-
+ 
 <section id="about">
   <div class="wrap">
     <div class="sec-head">
@@ -337,8 +352,7 @@
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p>Five years deep in campaign operations before I made the jump to programmatic. The details of that jump matter less than the pattern behind it — I learn fast, lean on the people around me, and never wait to be handed the manual. <span class="highlight">I picked up DV360 and CM360 the same way, years earlier</span>, through self-directed learning and good working relationships with the teams around me.</p>
-        <p>What stays constant across both sides: I catch the mistagged pixel, the pacing drift, the billing mismatch — before it becomes someone else's problem.</p>
+        <p>Five years deep in campaign operations before moving into programmatic. What carries across both sides is the same instinct — catch the problem before it's someone else's, and ask the right question before assuming the answer. That's also why picking up a new platform doesn't worry me: I taught myself DV360 and CM360 the same way, years ago, without waiting for a formal training track.</p>
       </div>
       <div class="fact-list">
         <div class="fact"><span class="fact-k">Based</span><span class="fact-v">Hyderabad, India</span></div>
@@ -349,7 +363,7 @@
     </div>
   </div>
 </section>
-
+ 
 <section id="skills">
   <div class="wrap">
     <div class="sec-head">
@@ -358,7 +372,7 @@
     </div>
     <div class="skill-cols">
       <div class="skill-panel">
-        <h3>DSP &amp; Programmatic</h3>
+        <h3>DSP Side</h3>
         <div class="chip-row">
           <span class="chip">The Trade Desk</span>
           <span class="chip">Madhive</span>
@@ -370,7 +384,7 @@
         </div>
       </div>
       <div class="skill-panel">
-        <h3>SSP &amp; Ad Servers</h3>
+        <h3>SSP Side</h3>
         <div class="chip-row">
           <span class="chip">Google Ad Manager</span>
           <span class="chip">Operative</span>
@@ -394,15 +408,47 @@
     </div>
   </div>
 </section>
-
-<section id="experience">
+ 
+<section id="how-i-think">
   <div class="wrap">
     <div class="sec-head">
       <span class="sec-index">03</span>
+      <div class="sec-head-flex"><span class="sec-title">How I Think</span></div>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <span class="num">01 — NOTICE</span>
+        <h4>Something's off</h4>
+        <p>A pacing report looks a little strange, or a client flags a number that doesn't match what they're seeing.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">02 — DIAGNOSE</span>
+        <h4>Find where it splits</h4>
+        <p>Pull the report, check the tag, compare first- and third-party numbers — find exactly where reality splits from the plan.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">03 — FIX</span>
+        <h4>Adjust what's causing it</h4>
+        <p>Targeting, budget, creative rotation, or a tag fix — whatever the diagnosis points to, and loop in the right team if it's not mine to fix alone.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">04 — CONFIRM</span>
+        <h4>Check, don't assume</h4>
+        <p>Re-check delivery after the fix goes live. It isn't resolved until the numbers actually say so.</p>
+      </div>
+    </div>
+    <p class="process-note">This is the same loop whether it's a pixel misfire on the SSP side or a pacing drift on a DSP — the details change, the process doesn't.</p>
+  </div>
+</section>
+ 
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-index">04</span>
       <div class="sec-head-flex"><span class="sec-title">Experience</span></div>
     </div>
     <div class="timeline" id="timeline">
-
+ 
       <div class="job">
         <div class="job-meta">
           <span class="dates">Apr 2026 — Present</span>
@@ -422,7 +468,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="job">
         <div class="job-meta">
           <span class="dates">Jun 2024 — Mar 2026</span>
@@ -442,7 +488,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="job">
         <div class="job-meta">
           <span class="dates">Jun 2021 — May 2024</span>
@@ -463,7 +509,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="job">
         <div class="job-meta">
           <span class="dates">May 2020 — Jun 2021</span>
@@ -482,7 +528,7 @@
           </div>
         </div>
       </div>
-
+ 
       <div class="job">
         <div class="job-meta">
           <span class="dates">May 2019 — May 2020</span>
@@ -501,15 +547,15 @@
           </div>
         </div>
       </div>
-
+ 
     </div>
   </div>
 </section>
-
+ 
 <section id="education">
   <div class="wrap">
     <div class="sec-head">
-      <span class="sec-index">04</span>
+      <span class="sec-index">05</span>
       <div class="sec-head-flex"><span class="sec-title">Education</span></div>
     </div>
     <div class="edu-grid">
@@ -526,12 +572,12 @@
     </div>
   </div>
 </section>
-
+ 
 <footer id="contact">
   <div class="wrap">
     <span class="eyebrow"><span class="dot"></span> OPEN TO OPPORTUNITIES</span>
     <h2>Let's talk<br>programmatic.</h2>
-    <p class="sub">Ramping fast, grounded in five years of campaign discipline. Reach out if there's a Trading, Programmatic, or Campaign Management seat to fill.</p>
+    <p class="sub">Grounded in five years of campaign operations, now focused on programmatic. Reach out if there's a Trading, Programmatic, or Campaign Management seat to fill.</p>
     <div class="contact-row">
       <a class="btn btn-primary" href="mailto:sinha4soumya@gmail.com">sinha4soumya@gmail.com</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/soumya-shikha-74132a15a/" target="_blank" rel="noopener">LinkedIn ↗</a>
@@ -540,7 +586,7 @@
     <p class="foot-note">HYDERABAD, INDIA — BUILT FOR PROGRAMMATIC, ONE RTB REPORT AT A TIME.</p>
   </div>
 </footer>
-
+ 
 <script>
   // Accordion for experience
   document.querySelectorAll('.job').forEach(job => {
@@ -552,7 +598,7 @@
   });
   // open first job by default
   document.querySelector('.job')?.classList.add('open');
-
+ 
   // DSP / SSP mode toggle
   document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -573,7 +619,7 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let tickerTimeoutId = null;
   let currentSet = 'dsp';
-
+ 
   function runTicker(mode){
     currentSet = mode;
     if(tickerTimeoutId) clearTimeout(tickerTimeoutId);
@@ -600,9 +646,10 @@
     };
     tick();
   }
-
+ 
   runTicker('dsp');
 </script>
-
+ 
 </body>
 </html>
+ 
