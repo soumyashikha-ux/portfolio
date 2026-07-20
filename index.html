@@ -154,18 +154,23 @@
   .why-card p{ font-size:14px; color:var(--text-dim); line-height:1.6; }
  
   /* ---------- HOW I THINK ---------- */
-  .process-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap:0; position:relative; }
-  @media (max-width:860px){ .process-grid{ grid-template-columns:1fr; gap:24px; } }
-  .process-step{ padding:0 20px 0 0; position:relative; }
+  .process-grid{ display:grid; grid-template-columns: repeat(5, 1fr); gap:0; position:relative; }
+  @media (max-width:1000px){ .process-grid{ grid-template-columns: repeat(3, 1fr); gap:28px 20px; } }
+  @media (max-width:640px){ .process-grid{ grid-template-columns:1fr; gap:24px; } }
+  .process-step{ padding:0 18px 0 0; position:relative; }
   .process-step:first-child{ padding-left:0; }
-  .process-step:not(:last-child)::after{
+  .process-grid > .process-step:not(:nth-child(5n))::after{
     content:'→'; position:absolute; right:-2px; top:6px; color:var(--teal-dim); font-family:var(--mono); font-size:14px;
   }
-  @media (max-width:860px){ .process-step:not(:last-child)::after{ content:'↓'; right:auto; left:0; top:auto; bottom:-20px; } }
+  @media (max-width:1000px){
+    .process-grid > .process-step:not(:nth-child(5n))::after{ content:none; }
+    .process-grid > .process-step:not(:nth-child(3n))::after{ content:'→'; position:absolute; right:-16px; top:6px; color:var(--teal-dim); font-family:var(--mono); font-size:14px; }
+  }
+  @media (max-width:640px){ .process-grid > .process-step::after{ content:none !important; } }
   .process-step .num{ font-family:var(--mono); font-size:11px; color:var(--amber); letter-spacing:0.1em; margin-bottom:8px; display:block; }
   .process-step h4{ font-family:var(--mono); font-size:13px; color:var(--text); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
   .process-step p{ font-size:13px; color:var(--text-dim); line-height:1.6; }
-  .process-note{ margin-top:28px; font-size:13px; color:var(--text-dimmer); font-family:var(--mono); }
+  .process-note{ margin-top:28px; font-size:13px; color:var(--text-dimmer); font-family:var(--mono); line-height:1.7; }
  
   /* ---------- SECTION SHELL ---------- */
   section{ padding:72px 0; border-top:1px solid var(--border-soft); }
@@ -280,7 +285,7 @@
     <div class="hero-grid">
       <div>
         <p class="pitch">
-          I run <strong>Display, Video, CTV/OTT, Audio, and DOOH</strong> campaigns end-to-end — setup, trafficking, RTB reporting, pacing, and optimization — on <strong>The Trade Desk, Madhive, and Audio Serve</strong>. Before that: five years of trafficking, tag QA, and billing reconciliation on the publisher side. I pick up new platforms fast and don't wait to be handed the manual.
+          I run Display, Video, CTV/OTT, Audio, and DOOH campaigns end-to-end — setup, trafficking, RTB reporting, pacing, and optimization — on The Trade Desk, Madhive, and Audio Serve. Before that: five years of trafficking, tag QA, and billing reconciliation on the publisher side. I pick up new platforms fast and don't wait to be handed the manual.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="mailto:sinha4soumya@gmail.com">Email Me →</a>
@@ -299,20 +304,20 @@
         </div>
         <div class="console-body">
           <div class="mode-panel active" data-panel="dsp">
-            <div class="cap-row"><span class="cap-ico">▸</span> Daily campaign optimization across DSPs</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Pulling and reading RTB performance reports</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Delivery troubleshooting and pacing management</div>
             <div class="cap-row"><span class="cap-ico">▸</span> Campaign setup — budgets, segmentation, geo-targeting</div>
             <div class="cap-row"><span class="cap-ico">▸</span> Tag and creative QA before launch</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> CTV/OTT, Audio &amp; DOOH campaign exposure</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Delivery troubleshooting right after launch</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Daily optimization across DSPs</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Pulling and reading RTB performance reports</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Pacing management across Display, Video, CTV/OTT, Audio &amp; DOOH</div>
           </div>
           <div class="mode-panel" data-panel="ssp">
-            <div class="cap-row"><span class="cap-ico">▸</span> Ran campaigns end-to-end on the publisher/SSP side</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Helped clients with CM360 tag setup and troubleshooting</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Pulled and shared delivery reports on a regular cycle</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Resolved tag-sharing issues between teams and partners</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Owned creative and tag QA before campaigns went live</div>
-            <div class="cap-row"><span class="cap-ico">▸</span> Led pacing calls with sales — proactively flagged updates and suggested optimizations</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Coordinated with sales on the pipeline before kickoff</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Ran budget &amp; creative/tag QA once planning handed off setup</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Trafficked ads and pixels for launch</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Troubleshot post-launch, then optimized through delivery</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Led pacing calls — monitored campaigns through to full delivery</div>
+            <div class="cap-row"><span class="cap-ico">▸</span> Closed out with EOC reporting, insights &amp; billing reconciliation</div>
           </div>
         </div>
         <div class="console-foot">
@@ -352,7 +357,7 @@
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p>Five years deep in campaign operations before moving into programmatic. What carries across both sides is the same instinct — catch the problem before it's someone else's, and ask the right question before assuming the answer. That's also why picking up a new platform doesn't worry me: I taught myself DV360 and CM360 the same way, years ago, without waiting for a formal training track.</p>
+        <p>Five years deep in campaign operations before moving into programmatic. What carries across both sides is the same instinct — catch the problem before it's someone else's, and ask the right question before assuming the answer. That's also why picking up a new platform doesn't worry me: I taught myself CM360 the same way, without waiting for a formal training track.</p>
       </div>
       <div class="fact-list">
         <div class="fact"><span class="fact-k">Based</span><span class="fact-v">Hyderabad, India</span></div>
@@ -417,27 +422,32 @@
     </div>
     <div class="process-grid">
       <div class="process-step">
-        <span class="num">01 — NOTICE</span>
-        <h4>Something's off</h4>
-        <p>A pacing report looks a little strange, or a client flags a number that doesn't match what they're seeing.</p>
+        <span class="num">01 — SETUP</span>
+        <h4>Align before it starts</h4>
+        <p>Sync with sales and planning, QA the budget and creative, confirm the build is ready before anything goes live.</p>
       </div>
       <div class="process-step">
-        <span class="num">02 — DIAGNOSE</span>
-        <h4>Find where it splits</h4>
-        <p>Pull the report, check the tag, compare first- and third-party numbers — find exactly where reality splits from the plan.</p>
+        <span class="num">02 — TRAFFIC</span>
+        <h4>Build it right</h4>
+        <p>Ad and pixel setup, then troubleshoot fast if anything looks off right after launch.</p>
       </div>
       <div class="process-step">
-        <span class="num">03 — FIX</span>
-        <h4>Adjust what's causing it</h4>
-        <p>Targeting, budget, creative rotation, or a tag fix — whatever the diagnosis points to, and loop in the right team if it's not mine to fix alone.</p>
+        <span class="num">03 — OPTIMIZE</span>
+        <h4>Stay ahead of it</h4>
+        <p>Pacing calls, mid-flight adjustments, and proactive updates — so the client hears it from me before they have to ask.</p>
       </div>
       <div class="process-step">
-        <span class="num">04 — CONFIRM</span>
-        <h4>Check, don't assume</h4>
-        <p>Re-check delivery after the fix goes live. It isn't resolved until the numbers actually say so.</p>
+        <span class="num">04 — DELIVER</span>
+        <h4>See it through</h4>
+        <p>Track the campaign until it's delivered in full — not just launched, but actually done.</p>
+      </div>
+      <div class="process-step">
+        <span class="num">05 — CLOSE</span>
+        <h4>Close the loop</h4>
+        <p>End-of-campaign reporting, insights, and billing reconciliation — numbers matched and the client billed correctly.</p>
       </div>
     </div>
-    <p class="process-note">Same loop either way — an ad server issue or a bidding platform issue. The specifics change; the process doesn't.</p>
+    <p class="process-note">The proactive updates in the middle of that loop tend to matter as much as the fix itself — clients stay confident even when something needs explaining, and that's usually what earns the trust to be handed the next campaign.</p>
   </div>
 </section>
  
@@ -479,7 +489,7 @@
           <div class="job-detail">
             <ul>
               <li>Owned high-budget, client-facing accounts.</li>
-              <li>Led 100+ campaign setups through a platform migration.</li>
+              <li>Led 500+ campaign setups through a platform migration.</li>
               <li>Aligned strategy with sales &amp; planning teams.</li>
               <li>Mentored teammates on setup, QA &amp; process.</li>
               <li>Became the go-to contact for key accounts.</li>
@@ -501,8 +511,8 @@
               <li>Managed end-to-end campaigns via GAM, Operative &amp; CM360.</li>
               <li>Scaled from low-budget to 2M+ impression accounts.</li>
               <li>Resolved trafficking issues — pixel misfires, data mismatches.</li>
+              <li>Improved delivery through proactive client updates.</li>
               <li>Closed billing reconciliation every cycle.</li>
-              <li>Ran pacing calls &amp; delivery updates with sales.</li>
               <li>Trained internal teams on process &amp; setup.</li>
             </ul>
             <div class="tag-row"><span class="tag">GAM</span><span class="tag">CM360</span><span class="tag">Billing</span><span class="tag">Jira</span></div>
